@@ -1,108 +1,3 @@
-// "use client"
-// import { pusherClient } from "@/lib/pusher";
-// import { chatHrefConstructor, toPusherKey } from "@/lib/utils";
-// import { useRouter, usePathname } from "next/navigation";
-// import { FunctionComponent, useState, useEffect } from "react";
-// import toast, {type Toast} from "react-hot-toast";
-// import UnseenChatToast from "./UnseenChatToast";
-// interface SidebarChatListProps {
-//     friends: User[],
-//     sessionId: string
-// }
-
-// interface ExtendedMessage extends Message{
-//   senderImg: string,
-//   senderName: string
-// }
- 
-// const SidebarChatList: FunctionComponent<SidebarChatListProps> = ({friends, sessionId}) => {
-
-//     const [unseenMesages, setUnseenMesages] = useState<Message[]>([])
-//     const router = useRouter();
-//     const pathname = usePathname(); //gives us only the route like /dashboard and not the whole link
-    
-
-
-//     useEffect(()=> {
-//       pusherClient.subscribe(toPusherKey(`user:${sessionId}:chats`))
-//       pusherClient.subscribe(toPusherKey(`user:${sessionId}:friends`))
-      
-
-//       const newFriendHandler = () => {
-//         router.refresh()
-//       }
-
-
-
-//       const newChatHandler = (message: ExtendedMessage) => {
-        
-//       const shouldNotify = pathname !== `/dashboard/chat/${chatHrefConstructor( sessionId, message.senderId)}`
-
-//       console.log(shouldNotify)
-//       if(!shouldNotify) return
-//       toast.custom((t) => (
-//         <UnseenChatToast
-//           t={t}
-//           sessionId={sessionId}
-//           senderId={message.senderId}
-//           senderImg={message.senderImg}
-//           senderMessage={message.text}
-//           senderName={message.senderName}
-//         />
-//       ))
-
-//       setUnseenMesages((prev) => [...prev, message])
-//       }
-
-
-//       pusherClient.bind('new_message', newChatHandler)
-//       pusherClient.bind('new_friend', newFriendHandler)
-
-//       return () => {
-//         pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:chats`))
-//         pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:friends`))
-//         pusherClient.unbind('new_message', newChatHandler)
-//         pusherClient.unbind('new_friend', newFriendHandler)
-//       }
-//     }, [pathname, router, sessionId])
-
-
-
-//     useEffect(() => {
-//         if(pathname?.includes('chat'))
-//         {
-//             setUnseenMesages((prev) => {
-//                 return prev.filter((message) => !pathname.includes(message.senderId))
-//             })
-//         }
-//     }, [pathname])
-
-//     return ( 
-//         <ul className="max-h-[25rem] overflow-y-auto -mx-2 space-y-1" role="list">
-//           {friends.sort().map((friend) => {
-//               const unseenMessagesCount = unseenMesages.filter((msg) => {
-//                 return msg.senderId === friend.id
-//               }).length
-//               return <li key={friend.id}>
-//                      <a href={`/dashboard/chat/${chatHrefConstructor(
-//                         sessionId,
-//                         friend.id
-//                      )}`} className="text-gray-700 hover:text-indigo-600 group flex items-center hover:bg-gray-50 gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
-//                         {friend.name}
-//                         {unseenMessagesCount > 0 ? (
-//                           <div className="bg-indigo-600 rounded-full text-white w-4 h-4 flex justify-center items-center text-xs font-medium">
-//                           {unseenMessagesCount}
-//                           </div>
-//                         ): null}
-//                      </a>
-//               </li>
-//           })}
-//         </ul>
-//      );
-// }
- 
-// export default SidebarChatList;
-
 'use client'
 
 import { pusherClient } from '@/lib/pusher'
@@ -133,8 +28,8 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ friends, sessionId }) => {
     pusherClient.subscribe(toPusherKey(`user:${sessionId}:friends`))
 
     const newFriendHandler = (newFriend: User) => {
-      console.log("received new user", newFriend)
       setActiveChats((prev) => [...prev, newFriend])
+      router.refresh()
     }
 
     const chatHandler = (message: ExtendedMessage) => {
