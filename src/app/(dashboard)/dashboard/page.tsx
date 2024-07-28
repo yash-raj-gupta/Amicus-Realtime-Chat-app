@@ -10,9 +10,6 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-interface pageProps {
-    
-}
  
 const page = async ({}) => {
 

@@ -30,8 +30,19 @@ const Page: FunctionComponent = () => {
        <div className="flex justify-center items-center min-h-full py-12 px-4 sm:px-6 lg:px-8">
            <div className="flex flex-col w-full max-w-md items-center space-y-8">
             <div className="flex flex-col items-center gap-8">
-                logo
-                <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign to your account</h2>
+              <div className="flex flex-row space-x-3 items-center -mb-4">
+              <Image
+                   src={'./logo.svg'}
+                   alt="logo"
+                   width={120}
+                   height={120}
+                   className="w-12 h-12 sm:w-10 sm:h-10 mr-3 "
+        />
+                <h1 className="text-4xl font-bold">Amicus</h1>
+              </div>
+              <p className="text-gray-500 leading-6">An app where all friends chat but privately</p>
+
+                <h2 className="mt-4 text-center text-3xl font-bold tracking-tight text-gray-900">Sign In to your account</h2>
             </div>
             <Button
             isLoading={isLoading}
