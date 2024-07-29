@@ -66,21 +66,25 @@ const FriendRequests: FunctionComponent<FriendRequestsProps> = ({
         <p className="text-sm text-zinc-500">Nothing to show here ...</p>
        ): (
         friendRequests.map((request) => (
-            <div className="flex items-center gap-4" key={request.senderId}>
-              <UserPlus className="text-black"/>
-              <p className="font-medium text-lg">{request.senderEmail}</p>
-
+            <div className="flex flex-col justify-center gap-4" key={request.senderId}>
+             <div className="flex gap-2">
+             <UserPlus className="text-black"/>
+              <p className="font-medium text-lg sm:text-ellipsis ">{request.senderEmail}</p>
+             </div>
+              <div className=" flex ml-2 gap-4">
               <button
                 onClick={() => acceptFriend(request.senderId)}
-               className="w-8 h-8 grid place-items-center bg-indigo-600 hover:bg-indigo-700 rounded-full transition hover:shadow-md" aria-label="accept friend">
-                <Check className="text-white font-semibold w-3/4 h-3/4"/>
+               className=" w-20 p-2 h-full grid place-items-center bg-indigo-600 hover:bg-indigo-700 rounded-md transition hover:shadow-md" aria-label="accept friend">
+                <p className="text-white font-semibold">Accept</p>
                 </button>
               <button
               onClick={() => denyFriend(request.senderId)}
-               className="w-8 h-8 grid place-items-center bg-red-600 hover:bg-red-700 rounded-full transition hover:shadow-md" aria-label="accept friend">
-                <X className="text-white font-semibold w-3/4 h-3/4"/>
+               className=" w-20 h-full p-2 grid place-items-center bg-red-600 hover:bg-red-700 rounded-md transition hover:shadow-md" aria-label="accept friend">
+                <p className="text-white font-semibold">Deny</p>
                 </button>
 
+              </div>
+              
             </div>
         ))
        )}
