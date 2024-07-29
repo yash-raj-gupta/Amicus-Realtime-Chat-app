@@ -43,7 +43,13 @@ const Layout = async ({children}: LayoutProps) => {
             </div>
             <div className="hidden md:flex grow max-w-xs w-full h-full flex-col gap-y-5 overflow-y-auto border-r border-gray-200 px-6 bg-white">
             <Link href="/dashboard" className="flex h-16 shrink-0 items-center">
-            <Icons.Logo className="h-8 w-auto "/>
+            <Image
+                 src={'./logo.svg'}
+                 alt="logo"
+                 width={100}
+                 height={100}
+                 className="w-10 h-10 "
+                   />
             <h2 className="text-3xl font-semibold ml-3">Amicus</h2>
             </Link>
            {friends.length > 0 ?  <div className="font-semibold text-xs leading-6 text-gray-400">
@@ -62,7 +68,7 @@ const Layout = async ({children}: LayoutProps) => {
                            {sidebarOptions.map((option) => {
                             const Icon = Icons[option.Icon]
                             return (
-                                <li key={option.id}>
+                                <li key={option?.id}>
                                     <Link href={option.href}
                                     className="text-gray-600 hover:text-indigo-600 hover:bg-gray-50 group flex rounded-md p-2 gap-3 text-sm leading-6 font-semibold"
                                     >
