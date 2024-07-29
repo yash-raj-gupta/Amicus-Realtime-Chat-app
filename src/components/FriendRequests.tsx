@@ -1,61 +1,66 @@
 "use client"
-import { pusherClient } from "@/lib/pusher";
-import { toPusherKey } from "@/lib/utils";
-import axios from "axios";
-import { Check, UserPlus, X } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { FunctionComponent , useEffect, useState} from "react";
+import { pusherClient } from '@/lib/pusher'
+import { toPusherKey } from '@/lib/utils'
+import axios from 'axios'
+import { Check, UserPlus, X } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { FC, useEffect, useState } from 'react'
 
 interface FriendRequestsProps {
-    initialFriendRequest: IncomingFriendRequest[],
-    sessionId: string
+  incomingFriendRequests: IncomingFriendRequest[]
+  sessionId: string
 }
- 
-const FriendRequests: FunctionComponent<FriendRequestsProps> = ({
-    initialFriendRequest,
-    sessionId}) => {
 
-        const router = useRouter();
-    const [friendRequests, setFriendRequests] = useState<IncomingFriendRequest[]>(
-        initialFriendRequest
+const FriendRequests: FC<FriendRequestsProps> = ({
+  incomingFriendRequests,
+  sessionId,
+}) => {
+  const router = useRouter()
+  const [friendRequests, setFriendRequests] = useState<IncomingFriendRequest[]>(
+    incomingFriendRequests
+  )
+
+  useEffect(() => {
+    pusherClient.subscribe(
+      toPusherKey(`user:${sessionId}:incoming_friend_requests`)
     )
 
-    //going to subscribe to any friend requests changes ae done in the server
-    // we are using the function toPusherKey because pusher invalidates : in the links
-    useEffect(()=> {
-      pusherClient.subscribe(toPusherKey(`user:${sessionId}:incoming_friend_requests`))
-
-      const friendRequestHandler = ({senderId, senderEmail}: IncomingFriendRequest) => {
-        setFriendRequests((prev) => [...prev, {senderId, senderEmail}])
-      }
-// binding tells pusher what to do
-      pusherClient.bind('incoming_friend_requests', friendRequestHandler)
-
-      return () => {
-        pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:incoming_friend_requests`))
-        pusherClient.unbind('incoming_friend_requests', friendRequestHandler)
-
-      }
-    },[sessionId])
-     
-
-    const acceptFriend = async (senderId: string) => {
-        await axios.post('/api/friends/accept', {id: senderId})
-
-        setFriendRequests((prev) => prev.filter((request) => request.senderId !== senderId))
-
-        router.refresh()
+    const friendRequestHandler = ({
+      senderId,
+      senderEmail,
+    }: IncomingFriendRequest) => {
+      setFriendRequests((prev) => [...prev, { senderId, senderEmail }])
     }
 
-    const denyFriend = async (senderId: string) => {
-        await axios.post('/api/friends/deny', {id: senderId})
+    pusherClient.bind('incoming_friend_requests', friendRequestHandler)
 
-        setFriendRequests((prev) => prev.filter((request) => request.senderId !== senderId))
-
-        router.refresh()
+    return () => {
+      pusherClient.unsubscribe(
+        toPusherKey(`user:${sessionId}:incoming_friend_requests`)
+      )
+      pusherClient.unbind('incoming_friend_requests', friendRequestHandler)
     }
+  }, [sessionId])
 
+  const acceptFriend = async (senderId: string) => {
+    await axios.post('/api/friends/accept', { id: senderId })
 
+    setFriendRequests((prev) =>
+      prev.filter((request) => request.senderId !== senderId)
+    )
+
+    router.refresh()
+  }
+
+  const denyFriend = async (senderId: string) => {
+    await axios.post('/api/friends/deny', { id: senderId })
+
+    setFriendRequests((prev) =>
+      prev.filter((request) => request.senderId !== senderId)
+    )
+
+    router.refresh()
+  }
     
 
 
