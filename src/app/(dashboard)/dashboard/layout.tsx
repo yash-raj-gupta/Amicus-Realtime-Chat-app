@@ -43,14 +43,7 @@ const Layout = async ({children}: LayoutProps) => {
             </div>
             <div className="hidden md:flex grow max-w-xs w-full h-full flex-col gap-y-5 overflow-y-auto border-r border-gray-200 px-6 bg-white">
             <Link href="/dashboard" className="flex h-16 shrink-0 items-center">
-            <Image
-                 fill
-                 src={'./logo.svg'}
-                 alt="logo"
-                 width={100}
-                 height={100}
-                 className="w-10 h-10 "
-                   />
+            <Icons.Logo className="w-8 h-8"/>
             <h2 className="text-3xl font-semibold ml-3">Amicus</h2>
             </Link>
            {friends.length > 0 ?  <div className="font-semibold text-xs leading-6 text-gray-400">

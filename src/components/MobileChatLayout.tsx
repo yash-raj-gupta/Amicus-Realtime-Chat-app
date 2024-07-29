@@ -38,7 +38,10 @@ const MobileChatLayout: FunctionComponent<MobileChatLayoutProps> = ({
         <div className="border-b border-zinc-200 bg-zinc-50 fixed top-0 inset-x-0 py-2 px-4">
             <div className="w-full flex justify-between items-center">
                 <Link href={'/dashboard'} className={buttonVariants({variant: 'ghost'})}>
-                <Icons.Logo className='h-6 w-auto text-indigo-600'/>
+                <div className=" w-auto h-6 -mt-2 md:-mt-0">
+                <Icons.Logo className=' h-6 border-2 border-red-600'/>
+                </div>
+                
                 </Link>
                 <Button
                 onClick={() => setOpen(true)}
