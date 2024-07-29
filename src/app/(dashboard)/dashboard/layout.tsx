@@ -44,6 +44,7 @@ const Layout = async ({children}: LayoutProps) => {
             <div className="hidden md:flex grow max-w-xs w-full h-full flex-col gap-y-5 overflow-y-auto border-r border-gray-200 px-6 bg-white">
             <Link href="/dashboard" className="flex h-16 shrink-0 items-center">
             <Image
+                 fill
                  src={'./logo.svg'}
                  alt="logo"
                  width={100}
