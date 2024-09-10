@@ -32,6 +32,9 @@ export const authOptions: NextAuthOptions = {
         GithubProvider({
             clientId: getGithubCredentials().clientId,
             clientSecret: getGithubCredentials().clientSecret,
+            httpOptions: {
+                timeout: 10000
+              }
         })
     ],
     callbacks: {
@@ -64,5 +67,6 @@ export const authOptions: NextAuthOptions = {
         redirect(){
             return '/dashboard'
         }
-    }
+    },
+
 }
