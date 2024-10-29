@@ -63,7 +63,7 @@ Check out the live version of Amicus [here](https://realtime-chat-app-nine-tau.v
 
 ## 🤝 Contributing
 
-Contributions and feedback are welcome! Feel free to check out the [Amicus GitHub repository](https://github.com/your-repo-link) to report issues or submit pull requests.
+Contributions and feedback are welcome! Feel free to check out the [Amicus GitHub repository](https://github.com/yash-raj-gupta/Amicus-Realtime-Chat-app) to report issues or submit pull requests.
 
 ---
 
